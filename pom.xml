@@ -57,7 +57,17 @@
 				<version>${mockito-version}</version>
 				<scope>test</scope>
 			</dependency>
-
+			<dependency>
+				<groupId> org.projectlombok </groupId>
+				<artifactId> lombok </artifactId>
+				<version>${lombock.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongo-java-driver</artifactId>
+				<version>${mongodb-version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -102,6 +112,14 @@
 			<groupId>org.mockito</groupId>
 			<artifactId>mockito-core</artifactId>
 		</dependency>
+		<dependency>
+			<groupId> org.projectlombok </groupId>
+			<artifactId> lombok </artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongo-java-driver</artifactId>
+		</dependency>
 		<!-- <dependency> <groupId>org.glassfish.jersey.test-framework.providers</groupId> 
 			<artifactId>jersey-test-framework-provider-bundle</artifactId> <type>pom</type> 
 			<scope>test</scope> </dependency> -->
@@ -113,11 +131,24 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.1</version>
+				<version>${compiler.maven.plugin.version}</version>
 				<inherited>true</inherited>
 				<configuration>
-					<source>11</source>
-					<target>11</target>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+					<encoding>${project.build.sourceEncoding}</encoding>
+					<testSource>${java.version}</testSource>
+					<testTarget>${java.version}</testTarget>
+					<annotationProcessorPaths>
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok</artifactId>
+							<version>${lombock.version}</version>
+						</path>
+					</annotationProcessorPaths>
+
+					<!-- <compilerArgs> <compilerArg> -Amapstruct.defaultComponentModel=spring 
+						</compilerArg> </compilerArgs> -->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -148,5 +179,9 @@
 		<junit-version>5.7.1</junit-version>
 		<mockito-version>3.6.28</mockito-version>
 		<junit-platform-version>1.2.0</junit-platform-version>
+		<lombock.version>1.18.20</lombock.version>
+		<java.version>11</java.version>
+		<compiler.maven.plugin.version>3.8.1</compiler.maven.plugin.version>
+		<mongodb-version>3.4.1</mongodb-version>
 	</properties>
 </project>

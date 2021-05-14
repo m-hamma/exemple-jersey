@@ -3,7 +3,9 @@ package com.hamma.jersey.rest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "myresource" path)
@@ -20,6 +22,10 @@ public class MyResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     public String getIt() {
+    	//Client client = ClientBuilder.newClient();
+    	//client.target('').
+    	/*Response response 
+    	  = invocationBuilder.get(Employee.class);*/
         return "Hello, Heroku!";
     }
 }
