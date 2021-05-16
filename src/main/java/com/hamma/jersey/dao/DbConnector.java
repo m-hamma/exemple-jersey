@@ -21,7 +21,7 @@ public class DbConnector {
 		return INSTANCE;
 	}
 	
-	public void Createcollection(String dbName) {
+	public void createcollection(String dbName) {
 		MongoClient client = new MongoClient("localhost", 27017);
 		MongoDatabase database = client.getDatabase(dbName);
 		
