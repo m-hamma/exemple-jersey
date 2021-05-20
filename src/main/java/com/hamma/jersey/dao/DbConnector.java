@@ -1,8 +1,14 @@
 package com.hamma.jersey.dao;
 
-import com.mongodb.DBCollection;
-import com.mongodb.MongoClient;
-import com.mongodb.client.MongoDatabase;
+
+
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.bson.Document;
 
 public class DbConnector {
 
@@ -22,19 +28,14 @@ public class DbConnector {
 	}
 	
 	public void createcollection(String dbName) {
-		MongoClient client = new MongoClient("localhost", 27017);
-		MongoDatabase database = client.getDatabase(dbName);
-		
-		DBCollection collection = database.getCollection("customers");
-		BasicDBObject document = new BasicDBObject();
-		document.put("name", "Shubham");
-		document.put("company", "Baeldung");
-		collection.insert(document);
 		
 	}
-	public void showDBs() {
-		MongoClient client = new MongoClient("localhost", 27017);
-		client.getUsedDatabases().forEach(System.out::println);
+	public void showDBs(String connectionString) {
+		//String connectionString = "http://localhost:27017/";
+		try (MongoClient mongoClient = MongoClients.create(connectionString)) {
+            List<Document> databases = mongoClient.listDatabases().into(new ArrayList<>());
+            databases.forEach(db -> System.out.println(db.toJson()));
+        }
 		
 	}
 

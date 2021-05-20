@@ -12,6 +12,6 @@ public class ExempleService {
 	ExempleDao exempleDao;
 
 	public void createCollection () {
-		exempleDao.createcollection();
+		exempleDao.createCollection();
 	}
 }

@@ -75,7 +75,11 @@
 				<artifactId>mongo-java-driver</artifactId>
 				<version>${mongodb-version}</version>
 			</dependency>
-
+			<dependency>
+				<groupId>org.mongodb</groupId>
+				<artifactId>mongodb-driver-sync</artifactId>
+				<version>${mongodb-async-version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 
@@ -96,6 +100,7 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
 		</dependency>
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
@@ -130,9 +135,13 @@
 			<groupId> org.projectlombok </groupId>
 			<artifactId> lombok </artifactId>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongo-java-driver</artifactId>
+		</dependency>-->
+		<dependency>
+			<groupId>org.mongodb</groupId>
+			<artifactId>mongodb-driver-sync</artifactId>
 		</dependency>
 		<!-- <dependency> <groupId>org.glassfish.jersey.test-framework.providers</groupId> 
 			<artifactId>jersey-test-framework-provider-bundle</artifactId> <type>pom</type> 
@@ -196,7 +205,8 @@
 		<lombock.version>1.18.20</lombock.version>
 		<java.version>11</java.version>
 		<compiler.maven.plugin.version>3.8.1</compiler.maven.plugin.version>
-		<mongodb-version>3.11.0</mongodb-version>
-		<spring.version>4.3.30.RELEASE</spring.version>
+		<mongodb-version>3.12.8</mongodb-version>
+		<spring.version>5.2.10.RELEASE</spring.version>
+		<mongodb-async-version>3.11.0</mongodb-async-version>
 	</properties>
 </project>
