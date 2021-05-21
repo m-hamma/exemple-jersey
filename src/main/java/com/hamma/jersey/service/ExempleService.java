@@ -5,13 +5,14 @@ import org.springframework.stereotype.Service;
 
 import com.hamma.jersey.dao.DbConnector;
 import com.hamma.jersey.dao.ExempleDao;
+import com.mongodb.client.MongoClient;
 
 @Service
 public class ExempleService {
 	@Autowired
 	ExempleDao exempleDao;
 
-	public void createCollection () {
-		exempleDao.createCollection();
+	public void getCollection () {
+		exempleDao.getCollection();
 	}
 }

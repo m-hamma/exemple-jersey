@@ -1,9 +1,12 @@
 package com.hamma.jersey.dao;
 
-
-
+import com.mongodb.Block;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.connection.ClusterSettings;
+import com.mongodb.connection.ClusterSettings.Builder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,8 +16,8 @@ import org.bson.Document;
 public class DbConnector {
 
 	/** Constructeur privé */
-    private DbConnector()
-    {}
+	private DbConnector() {
+	}
 
 	/** Instance unique non préinitialisée */
 	private static DbConnector INSTANCE = null;
@@ -22,20 +25,25 @@ public class DbConnector {
 	/** Point d'accès pour l'instance unique du singleton */
 	public static synchronized DbConnector getInstance() {
 		if (INSTANCE == null) {
-			INSTANCE =  new DbConnector();
+			INSTANCE = new DbConnector();
 		}
 		return INSTANCE;
 	}
-	
-	public void createcollection(String dbName) {
-		
+
+	public void createcollection() {
+
 	}
-	public void showDBs(String connectionString) {
-		//String connectionString = "http://localhost:27017/";
-		try (MongoClient mongoClient = MongoClients.create(connectionString)) {
-            List<Document> databases = mongoClient.listDatabases().into(new ArrayList<>());
-            databases.forEach(db -> System.out.println(db.toJson()));
-        }
+
+	public MongoClient getClient(List<ServerAddress> servers) {
+		Block<ClusterSettings.Builder> clusterSettings = new Block<ClusterSettings.Builder>() {
+			@Override
+			public void apply(Builder t) {
+				this.apply(t.hosts(servers));
+				
+			}};
+				
+	    MongoClientSettings settings = MongoClientSettings.builder().applyToClusterSettings(clusterSettings).build();
+	    return MongoClients.create(settings);
 		
 	}
 
