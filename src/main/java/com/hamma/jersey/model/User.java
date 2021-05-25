@@ -4,10 +4,10 @@ import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class Employee {
+public class User {
     private int id;
-    private String firstName;
+    private String name;
+    private Locale local;
 
     // standard getters and setters
 }

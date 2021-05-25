@@ -1,6 +1,6 @@
 package com.hamma.jersey.rest.client;
 
-import com.hamma.jersey.model.Employee;
+import com.hamma.jersey.model.User;
 
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -12,8 +12,8 @@ public class ExempleClient {
 
 	private Client client = ClientBuilder.newClient();
 
-	public Employee getJsonEmployee(int id) {
-		return client.target(REST_URI).path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).get(Employee.class);
+	public User getJsonEmployee(int id) {
+		return client.target(REST_URI).path(String.valueOf(id)).request(MediaType.APPLICATION_JSON).get(User.class);
 	}
 	// ...
 }

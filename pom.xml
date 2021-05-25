@@ -80,6 +80,20 @@
 				<artifactId>mongodb-driver-sync</artifactId>
 				<version>${mongodb-async-version}</version>
 			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct</artifactId>
+				<version>${mapstruct.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.mapstruct</groupId>
+				<artifactId>mapstruct-processor</artifactId>
+				<version>${mapstruct.version}</version>
+			</dependency>
+
+
+
 		</dependencies>
 	</dependencyManagement>
 
@@ -135,10 +149,17 @@
 			<groupId> org.projectlombok </groupId>
 			<artifactId> lombok </artifactId>
 		</dependency>
-		<!--<dependency>
-			<groupId>org.mongodb</groupId>
-			<artifactId>mongo-java-driver</artifactId>
-		</dependency>-->
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+		</dependency>
+
+		<!--<dependency> <groupId>org.mongodb</groupId> <artifactId>mongo-java-driver</artifactId> 
+			</dependency> -->
 		<dependency>
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
@@ -168,6 +189,19 @@
 							<artifactId>lombok</artifactId>
 							<version>${lombock.version}</version>
 						</path>
+
+						<path>
+							<groupId>org.mapstruct</groupId>
+							<artifactId>mapstruct-processor</artifactId>
+							<version>${mapstruct.version}</version>
+						</path>
+
+						<path>
+							<groupId>org.projectlombok</groupId>
+							<artifactId>lombok-mapstruct-binding</artifactId>
+							<version>${lombok-mapstruct-binding.version}</version>
+						</path>
+
 					</annotationProcessorPaths>
 
 					<!-- <compilerArgs> <compilerArg> -Amapstruct.defaultComponentModel=spring 
@@ -207,5 +241,7 @@
 		<mongodb-version>3.12.8</mongodb-version>
 		<spring.version>5.2.10.RELEASE</spring.version>
 		<mongodb-async-version>3.11.0</mongodb-async-version>
+		<mapstruct.version> 1.4.2.Final </mapstruct.version>
+		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
 	</properties>
 </project>
