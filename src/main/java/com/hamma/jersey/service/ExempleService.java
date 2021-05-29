@@ -1,6 +1,7 @@
 package com.hamma.jersey.service;
 
 import java.util.Collection;
+import java.util.concurrent.ExecutionException;
 
 import org.bson.Document;
 import org.mapstruct.factory.Mappers;
@@ -20,9 +21,8 @@ public class ExempleService {
 	ExempleDao exempleDao;
 	private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 
-	public Collection<UserDto> getListUsers () {
+	public Collection<UserDto> getListUsers () throws InterruptedException, ExecutionException {
 		
-		return null;
-				//userMapper.toListDto(exempleDao.getCollection());
+		return userMapper.toListDto(exempleDao.getCollection());
 	}
 }

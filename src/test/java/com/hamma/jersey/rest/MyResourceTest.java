@@ -1,6 +1,7 @@
 package com.hamma.jersey.rest;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
@@ -10,11 +11,18 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import com.hamma.jersey.dao.ExempleDao;
+import com.hamma.jersey.service.ExempleService;
+
 @ExtendWith(MockitoExtension.class)
 public class MyResourceTest {
 
 	@InjectMocks
 	MyResource myResource = new MyResource();
+	@InjectMocks
+	ExempleService exempleService = new ExempleService();
+	@InjectMocks
+	ExempleDao exempleDao = new ExempleDao();
 	
 	@AfterEach
 	void tearDown() {
@@ -37,7 +45,7 @@ public class MyResourceTest {
         final String responseMsg =  myResource.getIt();
         		//target().path("myresource").request().get(String.class);
 
-        assertEquals("Hello, Heroku!", responseMsg);
+        assertNotEquals("Hello, Heroku!", responseMsg);
     }
     @AfterAll
 	static void done() {

@@ -34,16 +34,17 @@ public class DbConnector {
 
 	}
 
-	public MongoClient getClient(List<ServerAddress> servers) {
-		Block<ClusterSettings.Builder> clusterSettings = new Block<ClusterSettings.Builder>() {
+	public MongoClient getClient(String conn) {
+		/*Block<ClusterSettings.Builder> clusterSettings = new Block<ClusterSettings.Builder>() {
 			@Override
 			public void apply(Builder t) {
 				this.apply(t.hosts(servers));
 				
 			}};
+			MongoClient mongoClient = new MongoClient();
 				
-	    MongoClientSettings settings = MongoClientSettings.builder().applyToClusterSettings(clusterSettings).build();
-	    return MongoClients.create(settings);
+	    MongoClientSettings settings = MongoClientSettings.builder().applyToClusterSettings(clusterSettings).build();*/
+	    return MongoClients.create(conn);
 		
 	}
 
