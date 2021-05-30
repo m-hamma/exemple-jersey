@@ -13,5 +13,8 @@ module com.hamma.rest{
 	requires org.mongodb.bson;
 	requires org.mongodb.driver.core;
 	exports com.hamma.jersey.rest;
+	exports com.hamma.jersey.service;
+	exports com.hamma.jersey.dao;
 	exports com.hamma.jersey.dto;
+	exports com.hamma.jersey.model;
 }

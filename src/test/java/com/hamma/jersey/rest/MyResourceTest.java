@@ -18,11 +18,11 @@ import com.hamma.jersey.service.ExempleService;
 public class MyResourceTest {
 
 	@InjectMocks
-	MyResource myResource = new MyResource();
-	@InjectMocks
-	ExempleService exempleService = new ExempleService();
-	@InjectMocks
 	ExempleDao exempleDao = new ExempleDao();
+	@InjectMocks
+	ExempleService exempleService = new ExempleService(exempleDao);
+	@InjectMocks
+	MyResource myResource = new MyResource(exempleService);
 	
 	@AfterEach
 	void tearDown() {

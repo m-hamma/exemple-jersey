@@ -21,10 +21,16 @@ import jakarta.ws.rs.core.Response;
  */
 @Path("myresource")
 public class MyResource {
-	@Autowired
 	ExempleService exempleService;
+	
 
-    /**
+    public MyResource(ExempleService exemService) {
+		super();
+		this.exempleService = exemService;
+	}
+
+
+	/**
      * Method handling HTTP GET requests. The returned object will be sent
      * to the client as "text/plain" media type.
      *
@@ -45,7 +51,7 @@ public class MyResource {
 			exempleService.getListUsers().stream().forEach(new Consumer<UserDto>() {
 	            @Override
 	            public void accept(UserDto user) {
-	            	  System.out.println(user.getName());
+	            	  System.out.println("------------------------------------------------------------------------------------"+user.getName());
 	            }
 	        });
 		} catch (InterruptedException | ExecutionException e) {
