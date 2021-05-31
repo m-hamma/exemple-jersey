@@ -21,7 +21,7 @@ import com.mongodb.client.MongoDatabase;
 
 @Service
 public class ExempleDao {
-	public final static String DATABASE_NAME="testdb";
+	public final static String DATABASE_NAME="test";
 	private static final String SECDEF_COLLECTION_NAME = "users"; 
 	private static final String URL = "mongodb://localhost:27017/"; 
 	
@@ -30,6 +30,15 @@ public class ExempleDao {
 		MongoClient mongoClient = DbConnector.getInstance().getClient(URL);
 		 CodecRegistry pojoCodecRegistry = org.bson.codecs.configuration.CodecRegistries.fromRegistries(MongoClientSettings.getDefaultCodecRegistry(), org.bson.codecs.configuration.CodecRegistries.fromProviders(PojoCodecProvider.builder().automatic(true).build()));
 		MongoDatabase database = mongoClient.getDatabase(DATABASE_NAME).withCodecRegistry(pojoCodecRegistry);
+		//database.listCollections().forEach(System::out::println);
+		//database.listCollections().forEach((k) -> System.out.println("Key : " + k + ", Value : " + v));
+		System.out.println("+++++++++++++++++++++++++++++++++++++++++++"+database.listCollectionNames().first()); 
+		database.listCollectionNames().forEach(new Consumer<String>() {
+	            @Override
+	            public void accept(String name) {
+	            	System.out.println("+++++++++++++++++++++++++++++++++++++++++++"+name);
+	            }
+	        });
 		return getMongoDocuments(database);
 	}
 	public List<User> getMongoDocuments(MongoDatabase database) throws InterruptedException, ExecutionException {

@@ -42,9 +42,9 @@ public class MyResourceTest {
      */
     @Test
     public void testGetIt() {
-        final String responseMsg =  myResource.getIt();
+        final String responseMsg =  myResource.getIt().toString();
         		//target().path("myresource").request().get(String.class);
-
+        System.out.println(responseMsg);
         assertNotEquals("Hello, Heroku!", responseMsg);
     }
     @AfterAll
