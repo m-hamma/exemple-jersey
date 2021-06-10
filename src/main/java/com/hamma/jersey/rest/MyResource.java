@@ -4,29 +4,30 @@ import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Consumer;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hamma.jersey.dto.UserDto;
-import com.hamma.jersey.model.User;
 import com.hamma.jersey.service.ExempleService;
+import com.hamma.main.MongoApp;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.core.MediaType;
-import jakarta.ws.rs.core.Response;
 
 /**
  * Root resource (exposed at "myresource" path)
  */
 @Path("myresource")
 public class MyResource {
+	private static final Log log = LogFactory.getLog(MyResource.class);
+	@Autowired
 	ExempleService exempleService;
 
-	public MyResource(ExempleService exemService) {
+	public MyResource() {
 		super();
-		this.exempleService = exemService;
 	}
 
 	/**
@@ -45,9 +46,9 @@ public class MyResource {
 			result.stream().forEach(new Consumer<UserDto>() {
 				@Override
 				public void accept(UserDto user) {
-					System.out.println("---------------------" + user.getName() + "---------------------");
+					log.info("---------------------" + user.getName() + "---------------------");
 					if (user.getLocal() != null)
-						System.out.println(
+						log.info(
 								"---------------------" + user.getLocal().getEmail() + "---------------------");
 				}
 			});

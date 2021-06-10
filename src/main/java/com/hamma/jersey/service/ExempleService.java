@@ -4,6 +4,7 @@ import java.util.Collection;
 import java.util.concurrent.ExecutionException;
 
 import org.mapstruct.factory.Mappers;
+import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +14,10 @@ import com.hamma.jersey.mapper.UserMapper;
 
 @Service
 public class ExempleService {
+	@Autowired
 	ExempleDao exempleDao;
-	public ExempleService(ExempleDao exempleDao) {
+	public ExempleService() {
 		super();
-		this.exempleDao = exempleDao;
 	}
 	private UserMapper userMapper = Mappers.getMapper(UserMapper.class);
 

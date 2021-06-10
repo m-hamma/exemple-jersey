@@ -97,8 +97,16 @@
 				<artifactId>javax.transaction-api</artifactId>
 				<version>1.3</version>
 			</dependency>
-
-
+			<dependency>
+				<groupId>org.springframework.data</groupId>
+				<artifactId>spring-data-mongodb</artifactId>
+				<version>${springdata-mongodbVersion}</version>
+			</dependency>
+			<dependency>
+				<groupId>commons-logging</groupId>
+				<artifactId>commons-logging</artifactId>
+				<version>${commons-logging-version}</version>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -175,10 +183,21 @@
 			<groupId>org.mongodb</groupId>
 			<artifactId>mongodb-driver-sync</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-mongodb</artifactId>
+		</dependency>
 		<!-- <dependency> <groupId>org.glassfish.jersey.test-framework.providers</groupId> 
 			<artifactId>jersey-test-framework-provider-bundle</artifactId> <type>pom</type> 
 			<scope>test</scope> </dependency> -->
 	</dependencies>
+	<repositories>
+		<repository>
+			<id>spring-milestone</id>
+			<name>Spring Maven MILESTONE Repository</name>
+			<url>https://repo.spring.io/libs-milestone</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<finalName>exemple-jersey</finalName>
@@ -250,9 +269,11 @@
 		<java.version>11</java.version>
 		<compiler.maven.plugin.version>3.8.1</compiler.maven.plugin.version>
 		<mongodb-version>3.12.8</mongodb-version>
-		<spring.version>5.2.10.RELEASE</spring.version>
+		<spring.version>5.3.7</spring.version>
 		<mongodb-async-version>3.11.0</mongodb-async-version>
 		<mapstruct.version> 1.4.2.Final </mapstruct.version>
 		<lombok-mapstruct-binding.version>0.2.0</lombok-mapstruct-binding.version>
+		<springdata-mongodbVersion>3.2.1</springdata-mongodbVersion>
+		<commons-logging-version>1.2</commons-logging-version>
 	</properties>
 </project>

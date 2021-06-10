@@ -12,6 +12,12 @@ module com.hamma.rest{
 	requires org.mongodb.driver.sync.client;
 	requires org.mongodb.bson;
 	requires org.mongodb.driver.core;
+	requires spring.jcl;
+	requires spring.data.mongodb;
+	requires spring.tx;
+	requires spring.data.commons;
+	requires java.desktop;
+	//requires org.mockito;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;
 	exports com.hamma.jersey.dao;
