@@ -107,6 +107,12 @@
 				<artifactId>commons-logging</artifactId>
 				<version>${commons-logging-version}</version>
 			</dependency>
+			<dependency>
+				<groupId>jakarta.servlet</groupId>
+				<artifactId>jakarta.servlet-api</artifactId>
+				<version>4.0.3</version>
+				<scope>provided</scope>
+			</dependency>
 
 		</dependencies>
 	</dependencyManagement>
@@ -115,6 +121,10 @@
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.inject</groupId>

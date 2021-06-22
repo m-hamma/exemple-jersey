@@ -8,7 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import org.springframework.data.projection.ProjectionFactory;
+
+import com.hamma.jersey.config.ManagerFactory;
+import com.hamma.jersey.dto.ProjectManager;
+
 public class Exemple4 extends JFrame {
+	private static ManagerFactory managerFactory ;
 
 	/**
 	 * 
@@ -41,7 +47,7 @@ public class Exemple4 extends JFrame {
 	}
 
     public static void main(String[] args) throws Exception{
-    	new Exemple4();
+    	ProjectManager pm = managerFactory.getProjectManager();
     	
     }
 
