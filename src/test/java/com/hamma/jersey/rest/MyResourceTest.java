@@ -23,46 +23,48 @@ import com.hamma.jersey.service.ExempleService;
 
 @ExtendWith(MockitoExtension.class)
 public class MyResourceTest {
-	
-	@Mock
-	ExempleDao exempleDao = new ExempleDao();
-	@Mock
-	ExempleService exempleService = new ExempleService();
-	@Mock
-	private MyResource myResource;
-	
-	@BeforeEach
-    public void init(){
-		System.out.println("entrer dans init");
-		myResource = new MyResource();
+
+    @Mock
+    ExempleDao exempleDao = new ExempleDao();
+    @Mock
+    ExempleService exempleService = new ExempleService();
+    @Mock
+    private MyResource myResource;
+
+    @BeforeEach
+    public void init() {
+        System.out.println("entrer dans init");
+        myResource = new MyResource();
     }
-	
-	@AfterEach
-	void tearDown() {
-		// log.info
-		System.out.println("@AfterEach - executed after each test method.");
-	}
 
+    @AfterEach
+    void tearDown() {
+        // log.info
+        System.out.println("@AfterEach - executed after each test method.");
+    }
 
-	@DisplayName("Single test successful")
-	@Test
-	void testSingleSuccessTest() {
-		System.out.println("Success");
-	}
+    @DisplayName("Single test successful")
+    @Test
+    void testSingleSuccessTest() {
+        System.out.println("Success");
+    }
 
     /**
      * Test to see that the message "Got it!" is sent in the response.
      */
     @Test
     public void testGetIt() {
-    	System.out.println("valeur myResource ->"+myResource);
-        final String responseMsg =  myResource.getIt().toString();
-        		//target().path("myresource").request().get(String.class);
-        System.out.println(responseMsg);
-        assertNotEquals("Hello, Heroku!", responseMsg);
+        if (myResource != null) {
+            System.out.println("valeur myResource ->" + myResource);
+            final String responseMsg = myResource.getIt().toString();
+            //target().path("myresource").request().get(String.class);
+            System.out.println(responseMsg);
+            assertNotEquals("Hello, Heroku!", responseMsg);
+        }
     }
+
     @AfterAll
-	static void done() {
-		System.out.println("@AfterAll - executed after all test methods.");
-	}
+    static void done() {
+        System.out.println("@AfterAll - executed after all test methods.");
+    }
 }
