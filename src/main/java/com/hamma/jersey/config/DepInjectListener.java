@@ -1,7 +1,7 @@
 package com.hamma.jersey.config;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 
 import com.hamma.jersey.rest.AbstractResource;
 

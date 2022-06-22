@@ -18,7 +18,7 @@ module com.hamma.rest{
 	requires spring.data.commons;
 	requires java.desktop;
 	requires jdk.hotspot.agent;
-	requires java.servlet;
+	requires jakarta.servlet;
 	//requires org.mockito;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;

@@ -11,15 +11,19 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class ProjectResource extends AbstractResource{
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	@Path("{id}")
-	public UserDto getIt(@PathParam("id") Integer id) {
-		ProjectManager pm = getManagerFactory().getProjectManager();
-		Collection<UserDto> result = null;
-		return null;
-	}
+public class ProjectResource extends AbstractResource {
+
+    @Autowired
+    ProjectManager pm;
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("{id}")
+    public UserDto getIt(@PathParam("id") Integer id) {
+        //ProjectManager pm = getManagerFactory().getProjectManager();
+        Collection<UserDto> result = null;
+        return null;
+    }
 }

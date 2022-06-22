@@ -17,7 +17,7 @@
         <junit-platform-version>1.2.0</junit-platform-version>
         <lombock.version>1.18.20</lombock.version>
         <java.version>11</java.version>
-        <compiler.maven.plugin.version>3.8.1</compiler.maven.plugin.version>
+        <compiler.maven.plugin.version>3.8.0</compiler.maven.plugin.version>
         <mongodb-version>3.12.11</mongodb-version>
         <spring.version>5.3.7</spring.version>
         <mongodb-async-version>3.11.0</mongodb-async-version>
@@ -110,12 +110,14 @@
                 <artifactId>mapstruct-processor</artifactId>
                 <version>${mapstruct.version}</version>
             </dependency>
-            <!-- https://mvnrepository.com/artifact/javax.transaction/javax.transaction-api -->
+            <!-- https://mvnrepository.com/artifact/jakarta.transaction/jakarta.transaction-api -->
+            <!-- https://mvnrepository.com/artifact/jakarta.transaction/jakarta.transaction-api -->
             <dependency>
                 <groupId>jakarta.transaction</groupId>
                 <artifactId>jakarta.transaction-api</artifactId>
                 <version>${jakarta.transaction.version}</version>
             </dependency>
+
             <dependency>
                 <groupId>org.springframework.data</groupId>
                 <artifactId>spring-data-mongodb</artifactId>
@@ -137,10 +139,7 @@
     </dependencyManagement>
 
     <dependencies>
-        <dependency>
-            <groupId>org.glassfish.jersey.containers</groupId>
-            <artifactId>jersey-container-servlet</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>jakarta.servlet</groupId>
             <artifactId>jakarta.servlet-api</artifactId>
@@ -149,10 +148,12 @@
             <groupId>org.glassfish.jersey.inject</groupId>
             <artifactId>jersey-hk2</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/jakarta.transaction/jakarta.transaction-api -->
         <dependency>
-            <groupId>javax.transaction</groupId>
-            <artifactId>javax.transaction-api</artifactId>
+            <groupId>jakarta.transaction</groupId>
+            <artifactId>jakarta.transaction-api</artifactId>
         </dependency>
+
 
 
         <!-- uncomment this to get JSON support <dependency> <groupId>org.glassfish.jersey.media</groupId> 
