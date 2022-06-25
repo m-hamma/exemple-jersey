@@ -19,6 +19,7 @@ module com.hamma.rest{
 	requires java.desktop;
 	requires jdk.hotspot.agent;
 	requires jakarta.servlet;
+	requires jersey.server;
 	//requires org.mockito;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;

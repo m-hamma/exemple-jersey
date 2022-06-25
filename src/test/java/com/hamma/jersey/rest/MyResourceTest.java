@@ -34,7 +34,7 @@ public class MyResourceTest {
     @BeforeEach
     public void init() {
         System.out.println("entrer dans init");
-        myResource = new MyResource();
+        myResource = new MyResource(exempleService);
     }
 
     @AfterEach
