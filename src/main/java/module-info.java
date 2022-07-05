@@ -18,8 +18,14 @@ module com.hamma.rest{
 	requires spring.data.commons;
 	requires java.desktop;
 	requires jdk.hotspot.agent;
-	requires jakarta.servlet;
+	//requires jakarta.servlet.api;
 	requires jersey.server;
+	requires org.glassfish.hk2.api;
+	requires jersey.common;
+	requires jakarta.inject;
+	requires slf4j.api;
+	requires java.logging;
+	requires jakarta.servlet;
 	//requires org.mockito;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;

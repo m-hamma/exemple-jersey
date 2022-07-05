@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hamma.jersey.dao.ExempleDao;
 import com.hamma.jersey.dao.UserRepository;
 import com.hamma.jersey.service.ExempleService;
+import com.hamma.jersey.service.impl.ExempleServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
 public class MyResourceTest {
@@ -27,14 +28,14 @@ public class MyResourceTest {
     @Mock
     ExempleDao exempleDao = new ExempleDao();
     @Mock
-    ExempleService exempleService = new ExempleService();
+    ExempleService exempleService = new ExempleServiceImpl();
     @Mock
     private MyResource myResource;
 
     @BeforeEach
     public void init() {
         System.out.println("entrer dans init");
-        myResource = new MyResource(exempleService);
+        myResource = new MyResource();
     }
 
     @AfterEach
