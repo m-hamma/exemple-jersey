@@ -4,6 +4,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+
 import com.hamma.jersey.rest.MyResource;
 
 import jakarta.ws.rs.ApplicationPath;
@@ -16,6 +18,6 @@ public class RestConfig extends Application {
 		          Arrays.asList(
 		            MyResource.class, 
 		            NotFoundExceptionHandler.class, 
-		            Exception.class));
+		            AlreadyExistsException.class));
 	}
 }
