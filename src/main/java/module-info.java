@@ -26,6 +26,7 @@ module com.hamma.rest{
 	requires slf4j.api;
 	requires java.logging;
 	requires jakarta.servlet;
+	requires javax.servlet.api;
 	//requires org.mockito;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;
