@@ -7,11 +7,14 @@ import java.util.function.Consumer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hamma.jersey.dto.UserDto;
 import com.hamma.jersey.service.ExempleService;
 
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -22,7 +25,9 @@ import jakarta.ws.rs.core.Response;
  * Root resource (exposed at "myresource" path)
  */
 @Path("/myresource")
-@RestController
+@Consumes(MediaType.APPLICATION_JSON)
+@Produces(MediaType.APPLICATION_JSON)
+//@RestController
 public class MyResource {
 	private static final Log log = LogFactory.getLog(MyResource.class);
 	@Autowired
@@ -33,8 +38,8 @@ public class MyResource {
 	 * client as "text/plain" media type.
 	 *
 	 * @return String that will be returned as a text/plain response.
-	 * @throws ExecutionException 
-	 * @throws InterruptedException 
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 */
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)

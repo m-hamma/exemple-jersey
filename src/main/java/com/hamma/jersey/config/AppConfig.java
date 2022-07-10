@@ -1,6 +1,7 @@
 package com.hamma.jersey.config;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
@@ -11,9 +12,9 @@ import com.mongodb.client.MongoClients;
 
 @Configuration
 @EnableSpringDataWebSupport
+@ComponentScan(basePackages = "com.hamma.jersey")
 @EnableMongoRepositories
 public class AppConfig {
-
 	/*
 	 * Use the standard Mongo driver API to create a com.mongodb.client.MongoClient
 	 * instance.

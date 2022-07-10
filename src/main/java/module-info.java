@@ -3,7 +3,7 @@ module com.hamma.rest{
 	requires java.compiler;
 	requires spring.core;
 	requires spring.context;
-	requires spring.web;
+	//requires spring.web;
 	requires spring.beans;
 	requires static lombok;
 	requires transitive org.mapstruct.processor;
@@ -13,6 +13,7 @@ module com.hamma.rest{
 	requires org.mongodb.bson;
 	requires org.mongodb.driver.core;
 	requires spring.jcl;
+	requires jersey.spring6;
 	requires spring.data.mongodb;
 	requires spring.tx;
 	requires spring.data.commons;
@@ -25,9 +26,13 @@ module com.hamma.rest{
 	requires jakarta.inject;
 	requires slf4j.api;
 	requires java.logging;
-	requires jakarta.servlet;
+	//requires jakarta.servlet;
 	requires javax.servlet.api;
+	requires jersey.container.servlet.core;
+	requires spring.web;
+	//requires spring.webmvc;
 	//requires org.mockito;
+	exports com.hamma.jersey.config;
 	exports com.hamma.jersey.rest;
 	exports com.hamma.jersey.service;
 	exports com.hamma.jersey.dao;
