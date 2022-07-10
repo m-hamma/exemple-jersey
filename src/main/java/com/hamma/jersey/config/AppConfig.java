@@ -11,7 +11,6 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
-@EnableSpringDataWebSupport
 @ComponentScan(basePackages = "com.hamma.jersey")
 @EnableMongoRepositories
 public class AppConfig {

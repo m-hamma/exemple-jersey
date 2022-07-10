@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 
+import org.glassfish.jersey.server.spring.scope.RequestContextFilter;
 import org.glassfish.jersey.servlet.ServletContainer;
 import org.springframework.beans.factory.support.SimpleSecurityContextProvider;
 import org.springframework.core.Ordered;
@@ -20,7 +21,6 @@ import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 //import org.springframework.web.servlet.DispatcherServlet;
 import org.springframework.web.filter.CharacterEncodingFilter;
-
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class ApplicationInitializer implements WebApplicationInitializer {
 
@@ -28,7 +28,7 @@ public class ApplicationInitializer implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) {
 		AnnotationConfigWebApplicationContext rootContext = new AnnotationConfigWebApplicationContext();
 
-		// rootContext.register(RequestContextFilter.class);
+		 rootContext.register(RequestContextFilter.class);
 		rootContext.register(AppConfig.class); //
 		// rootContext.register(MyResource.class); //
 		// rootContext.register(ExempleService.class);
