@@ -20,7 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.hamma.jersey.dao.ExempleDao;
 import com.hamma.jersey.dao.UserRepository;
 import com.hamma.jersey.service.ExempleService;
-import com.hamma.jersey.service.impl.ExempleServiceImpl;
+import com.hamma.jersey.service.ExempleService;
+
+import java.util.concurrent.ExecutionException;
 
 @ExtendWith(MockitoExtension.class)
 public class MyResourceTest {
@@ -28,7 +30,7 @@ public class MyResourceTest {
     @Mock
     ExempleDao exempleDao = new ExempleDao();
     @Mock
-    ExempleService exempleService = new ExempleServiceImpl();
+    ExempleService exempleService = new ExempleService();
     @Mock
     private MyResource myResource;
 
@@ -54,7 +56,7 @@ public class MyResourceTest {
      * Test to see that the message "Got it!" is sent in the response.
      */
     @Test
-    public void testGetIt() {
+    public void testGetIt() throws ExecutionException, InterruptedException {
         if (myResource != null) {
             System.out.println("valeur myResource ->" + myResource);
             final String responseMsg = myResource.getIt().toString();
