@@ -1,0 +1,1 @@
+mvn deploy:deploy-file -Durl=https://cip-nexus-assurance.is.echonet/repository/BNPPA_REF -DrepositoryId=BNPPA_REF -Dfile=eamodio.gitlens-12.1.2.zip -Dpackaging=zip -DgroupId=com.bpc.cij.pm-pkg -Dversion=12.1.2 -DartifactId=eamodio.gitlens-12.1.2
