@@ -136,6 +136,12 @@
 				<version>${springdata-mongodbVersion}</version>
 			</dependency>
 			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-jcl</artifactId>
+				<version>2.20.0</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
 				<groupId>commons-logging</groupId>
 				<artifactId>commons-logging</artifactId>
 				<version>${commons-logging-version}</version>
@@ -145,6 +151,18 @@
 				<artifactId>jakarta.servlet-api</artifactId>
 				<version>${jakarta.servlet.version}</version>
 				<scope>provided</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-core</artifactId>
+				<version>2.20.0</version>
+				<type>pom</type>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.logging.log4j</groupId>
+				<artifactId>log4j-api</artifactId>
+				<version>2.20.0</version>
+				<type>pom</type>
 			</dependency>
 			<dependency>
 				<groupId>jakarta.xml.bind</groupId>
@@ -157,11 +175,21 @@
 				<version>4.0.0</version>
 				<scope>runtime</scope>
 			</dependency>
+			<!-- https://mvnrepository.com/artifact/jakarta.jms/jakarta.jms-api -->
+			<dependency>
+				<groupId>jakarta.jms</groupId>
+				<artifactId>jakarta.jms-api</artifactId>
+				<version>2.0.3</version>
+			</dependency>
+
 		</dependencies>
 	</dependencyManagement>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>jakarta.jms</groupId>
+			<artifactId>jakarta.jms-api</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.glassfish.jersey.ext</groupId>
 			<artifactId>jersey-spring6</artifactId>
