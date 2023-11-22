@@ -1,0 +1,464 @@
+#maven
+
+mvn -Dmaven.repo.local=C:\APPS\IC\repository clean install
+
+#sonar 
+mvn sonar:sonar -Dsonar.projectKey=p-1729-buster -Dsonar.host.url=https://tdo-sonarqube.group.echonet -Dsonar.login=4197431f8c5e106d7cc7ccde8b4fa03291bbc8bc
+
+#eclipse 
+certificats
+eclipse -vmargs -Djavax.net.ssl.trustStore="C:\chemin\du\certificat\ram.keystore"
+-Djavax.net.ssl.trustStorePassword=ibmram
+token git-> glpat-trSzr4SsksxhmA2PUXQd
+last token git (14/03/2023) -> glpat-g7m2WyXZmLX7-vtxXzq2
+
+#CINRJ
+modules :
+
+bnppa_cinrj_core_api
+bnppa_cinrj_distrib_api
+bnppa_cinrj_sesame_api
+bnppa_cinrj_ice_api
+bnppa_cinrj_report_api
+bnppa_cinrj_util_api
+BNPPA_CINRJ_CRYPTO_API
+
+
+bnppa_cinrj_dataaccess_api
+bnppa_cinrj_healthcheck_api
+bnppa_cinrj_mule_api
+bnppa_cinrj_builder
+bpc_nrj_technicalheader
+
+
+
+
+
+*pb compilation
+bnppa_cinrj_global_distrib
+
+#enplus
+
+Hello Ionut, the realese 5.5.1 of the CINRJ's BNPPA_CINRJ_CORE_API module is now available on the remote repository, you can use it. Thanks
+
+#code Clarity CNRJ :
+U0320
+https://clarity-cardif-assurance.is.echonet/niku/nu#action:projmgr.projectDefaultTab&id=6492009
+# liens utiles pour cinrj core
+https://confluence.group.echonet/display/TCAAS1623/Librairies
+
+# filtre jira SOT
+project in (SOT, CDJ, CDJINT) AND issuetype != "Fiche de suivi" AND status in (Open, Building, 
+Reopened, Specifying, "Waiting for external task", Specified) AND component 
+in ("Administration fonctionnelle - CVS", "Administration fonctionnelle - Git", 
+"Administration fonctionnelle - Intégration continue", "Continuous Integration Platform", 
+JAVA) ORDER BY updated DESC, priority DESC, assignee ASC, status DESC
+
+#SOT 9455
+classe concernnee package com.bnppa.cinrj.core.resources;
+****************************************************
+/** 17.12.2019: solution de contournement: apr s la migration vers Liberty Core, la condition d'unicit  de la 
+  * ressource charg e ne peut plus  tre assur e (voir ligne 94)
+  * sous Libery Core, le fichier com/bnppa/cinrj/dataaccess/jdo/properties/jdo-xcalia-full-model.properties est charg  
+  * plusieurs fois, malgr  le fait que le jar qui le contient est present une seule fois (mvn dependency:tree)
+**/
+
+//TODO: re-examiner la n cessit  d'utiliser cette classe (et ce projet!) lors d'une mont e de version de CINRJ 
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.util.Collections;
+import java.util.List;
+import java.util.Properties;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+
+final class DefaultPropertiesReaderImpl implements IPropertiesReader {
+	
+
+    private static final Log log = LogFactory.getLog(DefaultPropertiesReaderImpl.class);
+	
+	private static IPropertiesReader instance;
+
+	private static final String SUFFIX = ".properties";
+
+	private DefaultPropertiesReaderImpl() {
+	}
+
+	/**
+	 * Returns the unique instance of {@link DefaultPropertiesReaderImpl}.
+	 * @return instance The unique instance
+	 */
+	static synchronized IPropertiesReader getInstance() { // NOPMD by chalcolpa on 09/10/09 14:43
+		if (null == instance) {
+			instance = new DefaultPropertiesReaderImpl();
+		}
+		return instance;
+	}
+	
+	/**
+	 * @throws IllegalArgumentException In the following conditions :
+	 * <ul>
+	 * <li><code>name</code> is <code>null</code></li>
+	 * <li>No resource referenced by <code>name</code> is found</li>
+	 * <li>More than one resource referenced by <code>name</code> is found</li>
+	 * </ul>
+	 * 
+	 * @see IPropertiesReader#loadProperties(String, ClassLoader)
+	 * 
+	 */
+	public Properties loadProperties(String name, boolean loadAsResourceBundle, ClassLoader loader) { // NOPMD by chalcolpa on 09/10/09 14:44
+		String loggedName = new StringBuffer(name).toString();
+
+		if (name == null) {
+			throw new IllegalArgumentException("null input: name");
+		}
+
+		if (name.startsWith("/")) {
+			name = name.substring(1);
+			loggedName = loggedName.substring(1);
+		}
+
+		if (name.endsWith(SUFFIX)) {
+			name = name.substring(0, name.length() - SUFFIX.length());
+			loggedName = loggedName.substring(0, loggedName.length() - SUFFIX.length());
+		}
+
+		Properties result = null;
+
+		try {
+			if (loader == null) {
+				loader = ResourceLoader.resolveClassLoader();
+			}
+
+			// gestion des parametres respectant la syntaxe des ResourceBundle
+			if (loadAsResourceBundle) {
+				name = name.replace('.', '/');
+			}
+
+			if (!name.endsWith(SUFFIX)) {
+				name = name.concat(SUFFIX);
+			}
+
+			// si plusieurs occurrences du meme fichier ont ete trouvees dans le classpath
+			List<URL> urls = Collections.list(loader.getResources(name)); // can throw IOException
+
+			switch (urls.size()) {
+				case 0: {
+					handleNoUrlsException(loggedName);
+					break;
+				}
+
+				case 1: {
+					result = handleOneUrl(name, loader, loggedName);
+					break;
+				}
+
+				default: {
+					if (isSameResourceUrl(urls, loggedName, loader, result)){
+						result=handleOneUrl(name, loader, loggedName);
+					} else {
+						handleManyUrlsException(loggedName, urls);
+					}
+				}
+			}
+
+		} catch (IOException e) {
+			result = null;
+		}
+
+		if (result == null) {
+			throw new IllegalArgumentException("could not load ["
+					+ loggedName
+					+ "]"
+					+ " as a classloader resource");
+		}
+
+		return result;
+	}
+
+	private void handleManyUrlsException(String loggedName, List<URL> urls) {
+		String msg = "could not load ["
+				+ loggedName
+				+ "]. Found more than one resource in the classpath :\r\n"
+				+ ((URL) urls.get(0)).getPath()
+				+ " and "
+				+ ((URL) urls.get(1)).getPath();
+
+		log.error(msg);
+		throw new IllegalArgumentException(msg);
+	}
+
+	private Properties handleOneUrl(String name, ClassLoader loader, String loggedName) throws IOException {
+		
+		Properties result = new Properties();
+		InputStream in = null;
+		try {
+			in = loader.getResourceAsStream(name);
+			result.load(in);
+			log.info("Resource : " + loggedName + " has been loaded.");
+		} finally {
+			if (in != null) {
+				in.close();
+			} 
+		}
+		return result;
+	}
+
+	private void handleNoUrlsException(String loggedName) {
+		String msg = "could not load ["
+				+ loggedName
+				+ "]"
+				+ " as a classloader resource";
+		log.error(msg);
+		throw new IllegalArgumentException(msg);
+	}
+
+	private boolean isSameResourceUrl(List<URL> urls, String loggedName, ClassLoader loader, Properties result) throws IOException {
+		boolean isSame = true;
+		if (urls != null) {
+			String firstUrl = ((URL) urls.get(0)).getPath();
+			for(int i = 1; i < urls.size(); i++) {
+				if(!firstUrl.equals(((URL) urls.get(i)).getPath())) {
+					isSame = false;
+					break;
+				}
+			}
+		} else {
+			handleNoUrlsException(loggedName);
+		}
+		return isSame;
+	}
+	
+	/*** @see IPropertiesReader#loadProperties(String)
+	 */
+	public Properties loadProperties(final String name, boolean loadAsResourceBundle) {
+		Properties props = loadProperties(name, loadAsResourceBundle, null); 
+		return props;
+	}
+}
+****************************************************
+
+# import certificats
+keytool
+    -import
+    -alias <provide_an_alias>
+    -file <certificate_file>
+    -keystore <your_path_to_jre>/lib/security/cacerts
+	
+	******************BOM
+	
+sur site ;
+
+https://workspace.europe.echonet/Citrix/BNPStoreWeb/
+
+# Configurer SAP trusted authentification
+https://launchpad.support.sap.com/#/notes/2437493
+https://help.sap.com/docs/SAP_BUSINESSOBJECTS_BUSINESS_INTELLIGENCE_PLATFORM/2e167338c1b24da9b2a94e68efd79c42/468217c06e041014910aba7db0e91070.html?version=4.2.4
+ distance
+https://mobiworkspace.europe.echonet/Citrix/MobiStoreWeb/
+
+#divers
+mvn --encrypt-master-password xxxx
+
+https://bi43-dev-assurance.dev.echonet:10043/LogonApp/default.jsp
+INT-https://bi43-int-assurance.dev.echonet:10043/LogonApp
+
+commandes : tracert s01v09973037.apps.tech.net.intra
+#serveur dev
+s01v09982882 
+INJT ->s01v09982898
+#DEV
+s01v09982882.apps.tech.net.intra
+#BO acces 
+
+f65c12S9a2vDigny	BI43-DEV	Login = UID ; Mdp = the_one_on_the_left ; URL BI43-DEV : https://bi43-dev-assurance.dev.echonet:10043
+
+Support technique BO
+
+
+Login : S0017315928
+Mdp : Mot2PasseBidon
+
+
+#url homol
+https://bi43-hom-assurance.staging.echonet/LogonApp/
+MDP rDNpA1F3911Pv141
+
+#local
+http://localhost:8080/bpc-bom/default.jsp
+
+# SAML
+
+entityID="urn:cardif:saf:sp:bpcbom:int"
+
+
+entityID="urn:cardif:saf:idp:sesame"
+
+# pbs en cours
+fuite mémoire logs:
+
+SEVERE: The web application [LogonApp] created a ThreadLocal with key of type [org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl.ThreadCounterImpl] (value [org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl$ThreadCounterImpl@105aa0d5]) and a value of type [org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl.ThreadCounterImpl.Counter] (value [org.aspectj.runtime.internal.cflowstack.ThreadStackFactoryImpl$ThreadCounterImpl$Counter@266f485e]) but failed to remove it when the web application was stopped. Threads are going to be renewed over time to try and avoid a probable memory leak.
+
+
+#Doc jfrog anoyer lib sur artifactory
+https://confluence.group.echonet/pages/viewpage.action?pageId=90356172
+#lien pour retrouver lib dans artifactory
+https://repo.artifactory-dogen.group.echonet/artifactory/bp2S-public-release-cache/com/businessobjects/component/
+
+#url artifactory (voire libs)
+https://repo.artifactory-dogen.group.echonet/artifactory/p-2602-bpc-bom-RELEASE/com/businessobjects/component/freessl201/
+
+#repo maven
+p-2602-maven
+
+#commande pour afficher un repo :
+
+https://repo.artifactory-dogen.group.echonet/ui/repos/tree/General/p-1708-maven
+#artifactory
+C:\Dev\intellij-workspace\bpc-bom\src\main\WebContent\WEB-INF\lib
+
+mettre à jour jfrog (changement password)
+$ jfrog config rm
+$ jfrog config add --interactive=false --url https://repo.artifactory-dogen.group.echonet --user <UID> --password <PASSWORD> artifactory-prod
+
+
+
+****** FIN BOM
+
+# testes pinfg port
+ Test-NetConnection  cd01.fr.net.intra -p 55
+ Test-NetConnection s01v09973037.apps.tech.net.intra -p 6400 
+  Test-NetConnection s01vl9973293apps.tech.net.intra -p 6400  
+  Test-NetConnection sesame-services-etudes-assurance.dev.echonet -p 10449
+  Test-NetConnection sesame-services-etudes-assurance.dev.echonet -InformationLevel "Detailed"
+  Test-NetConnection s01v09973037.apps.tech.net.intra -InformationLevel "Detailed"
+  
+  Test-NetConnection -ComputerName sesame-services-etudes-assurance.dev.echonet -DiagnoseRouting -InformationLevel Detailed
+  Test-NetConnection -ComputerName s01v09973037.apps.tech.net.intra -DiagnoseRouting -InformationLevel Detailed
+  
+  #certicats sésame
+keytool.exe -genkeypair -keystore store.keys -storepass hamma75 -keypass hamma75 -alias samlshakirdevencryption2 -dname "CN=DHODS" -keyAlg RSA -keysize 1024 -validity 1825
+keytool.exe -genkeypair -keystore store.keys -storepass hamma75 -keypass hamma75 -alias samlshakirdevsinging2 -dname "CN=DHODS" -keyAlg RSA -keysize 1024 -validity 1825 
+
+keytool.exe -export -alias samlshakirdevencryption2 -keystore store.keys -storepass hamma75 -rfc -file dhods_rec_enc_publickey.cert
+keytool.exe -export -alias samlshakirdevsinging2 -keystore store.keys -storepass hamma75 -rfc -file dhods_rec_sin_publickey.cert
+
+keytool -importcert -file dhods_rec_enc_publickey.cert -keystore keystore.jks -alias "samlshakirdevencryption2"
+keytool -importcert -file dhods_rec_sin_publickey.cert -keystore keystore.jks -alias "samlshakirdevsinging2"
+keytool -list -v -keystore "C:\APPS\IC\oraclejdk-x64-8\jre\lib\security\cacerts"
+
+*********************
+keytool -importcert -file cert-root-bnp.cer  -alias "mykey"
+
+-->cert
+-->ensuit exporter certificat
+
+keytool -list -v -keystore "C:\APPS\IC\oraclejdk-x64-8\jre\lib\security\cacerts"
+
+
+TAIL sous Windows
+powershell get-content -tail 1000 -wait nomfichier
+
+
+Dans le fichier context.xml de tomcat/conf décommenter le manager
+
+    <!-- Uncomment this to disable session persistence across Tomcat restarts -->
+    <Manager pathname="" />
+#commandes jfrog
+jfrog add --interactive=false --url=https://repo.artifactory-dogen.group.echonet --user f01649 --apiKey 
+
+jfrog config rm
+$ jfrog config add --interactive=false --url https://repo.artifactory-dogen.group.echonet --user f01649 --password cmVmdGtuOjAxOjE3MTA0MjQwMjk6aEFtVExqT3FlRThWbkhGS3luQjA2c2toSWU0 artifactory-prod
+
+ou 
+jfrog config add --interactive=false --url https://repo.artifactory-dogen.group.echonet --user f01649 --access-token cmVmdGtuOjAxOjE3MTA0MjQwMjk6aEFtVExqT3FlRThWbkhGS3lu
+QjA2c2toSWU0 artifactory-prod
+
+jfrog config show
+
+jfrog config use artifactory-prod
+jfrog rt ping
+
+deployer ce qui a dans target :
+jfrog rt u 'target/(*)' 'pad-maven/{1}' --flat=false --target-props='project_repo=p-1234-myapp-RELEASE'  --exclusions='target/**/maven-metadata-local.xml
+
+
+docs -> https://confluence.group.echonet/pages/viewpage.action?pageId=144972877
+
+# service now
+groupe à mettre AP24141 -- PLATEFORME DEVOPS ITG – JENKINS
+#password modifier
+mypassword.group.echonet
+
+#incidents 
+07042023 --> INC5206720
+
+#consulter images
+https://confluence.group.echonet/display/STDB/%5BEN%5D+Available+ICP+Build+Images+for+Jenkins 
+
+# cods unicode
+é ->\u00e9
+à -> \u00e0
+è --> \u00e8
+û -->\u00fb
+î -->\u00ce
+ê -->\u00ea
+â --> \u00e2
+ç --> \u00e7
+ï--->\u00ef
+ë -->\u00eb
+ö-->\u00f6
+ô--> \u00f4
+ü-->\u00fc
+
+#awaitilit api
+
+ Awaitility.await()
+                .atMost(Labels.TIMEOUT_10000, TimeUnit.MILLISECONDS)
+                .pollInterval(10, TimeUnit.MILLISECONDS)
+                .until(() -> (eventListCode.size()==4));
+				
+				// create instance of SecureRandom class
+        SecureRandom rand = new SecureRandom();
+ 
+        // Generate random integers in range 0 to 999
+        int rand_int1 = rand.nextInt(1000);
+				
+@PowerMockIgnore("javax.management.*")	
+@PowerMockIgnore("javax.security.*")
+@PowerMockIgnore({"javax.management.*","javax.security.*"})	
+
+#archetypes ddd
+Ci-après le nom des archétypes que j'ai généré.
+
+ 
+
+spring-boot-ddd-archetype-ng13 : Angular 13 + SB2.6.7 + JDK8
+
+ 
+
+spring-boot-ddd-archetype-j11 : Angular 13 + SB2.6.7 + JDK11
+
+ 
+
+Ci-après le lien de la documentation explicative sur la manière dont on génère un archétype par le biais d'Eclipse.
+
+Chapitre 2B : https://confluence.group.echonet/display/TCAAS1623/Developpment+environement+setup
+Lien du catalogue : https://cip-nexus-assurance.is.echonet/repository/BNPPA_REF/com/bpc/nrj/cinrj-archetype/bpc-nrj-archetype-catalog/1.0/bpc-nrj-archetype-catalog-1.0.xml
+
+#Dev*ops fundation
+confluence : https://confluence.group.echonet/display/TCAAS1236/DevOps+Foundation
+
+Aple Jenkins
+https://jenkins-dogen.group.echonet/p-2559-aple/job/bnppa-dsiint-aple/job/feature%252Flivraison-vault/
+
+#Aple
+url locale :
+http://localhost:8082/BNPPA_DSIINT_APLE_PRES_WAR/
+
+#jenkins 1690
+https://jenkins-dogen.group.echonet/p-1690-sts-esl-lib/job/bpc-cinrj-builder/job/master/

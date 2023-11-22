@@ -19,15 +19,16 @@ import com.mongodb.client.MongoClients;
 
 public class MongoApp {
 
-	//private static final Log log = LogFactory.getLog(MongoApp.class);
+    private static final Log logger = LogFactory.getLog(MongoApp.class);
 
-	public static void main(String[] args) throws Exception {
-		
-		List<String> list = Arrays.asList("one", "two", "three");
-		
-		Consumer<String> afficher = (String param) -> System.out.println(param);
-		list.stream().filter(e->e.equals("one")).map(e->e=e+" two").forEach(afficher);
-
-		
-	}
+    public static void main(String[] args) {
+        try {
+            //System.out.println(10/0);
+            logger.debug("test-->");
+            ClasseB classeB = new ClasseB();
+            classeB.foo();
+        } catch (ArithmeticException e) {
+            throw new NullPointerException();
+        }
+    }
 }
