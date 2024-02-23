@@ -6,6 +6,7 @@ import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
 import jakarta.ws.rs.core.MediaType;
 
+
 public class ExempleClient {
 
 	private static final String REST_URI = "http://localhost:8082/spring-jersey/resources/employees";

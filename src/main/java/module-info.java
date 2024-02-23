@@ -25,7 +25,9 @@ module com.hamma.rest{
 	requires jersey.common;
 	requires jakarta.inject;
 	requires slf4j.api;
-	requires java.logging;
+	requires org.apache.logging.log4j.core;
+	requires org.apache.logging.log4j;
+	//requires org.log4j2;
 	//requires jakarta.servlet;
 	requires javax.servlet.api;
 	requires jersey.container.servlet.core;

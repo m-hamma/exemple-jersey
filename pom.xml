@@ -8,12 +8,12 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>exemple-jersey</name>
 	<properties>
-		<jersey.version>3.0.2</jersey.version>
+		<jersey.version>3.1.5</jersey.version>
 		<jersey.spring.version>3.0.5</jersey.spring.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<junit-version>5.7.1</junit-version>
+		<junit-version>5.10.0</junit-version>
 		<mockito-version>3.6.28</mockito-version>
-		<junit-platform-version>1.2.0</junit-platform-version>
+		<junit-platform-version>1.10.0</junit-platform-version>
 		<lombock.version>1.18.20</lombock.version>
 		<java.version>17</java.version>
 		<compiler.maven.plugin.version>3.8.0</compiler.maven.plugin.version>
@@ -28,6 +28,7 @@
 		<jakarta.transaction.version>2.0.1</jakarta.transaction.version>
 		<maven.war.version>3.3.1</maven.war.version>
 		<h2.version>2.1.214</h2.version>
+		<log4j2.version>2.23.0</log4j2.version>
 	</properties>
 
 	<dependencyManagement>
@@ -316,6 +317,21 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-mongodb</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-api</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-core</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-jcl</artifactId>
+			<version>${log4j2.version}</version>
+		</dependency>
 		<!-- <dependency> <groupId>org.glassfish.jersey.test-framework.providers</groupId> 
         <artifactId>jersey-test-framework-provider-bundle</artifactId> <type>pom</type> 
         <scope>test</scope> </dependency> -->
@@ -389,6 +405,8 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>${maven.war.version}</version>
 			</plugin>
+
+
 
 		</plugins>
 	</build>
